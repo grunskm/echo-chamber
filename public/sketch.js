@@ -59,6 +59,7 @@ let sketch = function(p) {
 			let data = {
 				id:user[0].id,
 				pos:{x:xpos.toFixed(4),y:ypos.toFixed(4)},
+				c:cursorImg
 			};
 		//	print(data);
 			socket.emit('update', data);
