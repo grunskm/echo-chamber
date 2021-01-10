@@ -25,6 +25,10 @@ let sketch = function(p) {
 			user.push(new User(socket.id,-1,-1,cursorImg));
 		});
 
+		socket.on('disconnect',()=>{
+			socket.emit('leave',socket.id);
+		});
+
 		socket.on('position', function(data){
 
 			let position_update=false;
@@ -40,6 +44,15 @@ let sketch = function(p) {
 			if(position_update==false){
 				user.push(new User(data.id, -1, -1, data.c));
 				p.print("new user: " + data.id);
+			}
+		});
+
+		socket.on('remove',()=>{
+			for(i=0;i<user.length;i++){
+				if(data == user[i].id){
+					user.splice(i,1);
+					break;
+				}
 			}
 		});
 	}

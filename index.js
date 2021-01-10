@@ -26,5 +26,9 @@ io.sockets.on(
 		socket.on('update', function(data){
 			io.sockets.emit('position',data);
 		});
+
+		socket.on('leave', function(data){
+			io.sockets.emit('remove',data);
+		});
 	}
 );
