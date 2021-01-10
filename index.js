@@ -15,9 +15,7 @@ app.use(express.static('public'));
 
 var io = require('socket.io')(server);
 
-io.sockets.on(
-	'connection',
-	function(socket){
+io.sockets.on('connection',(socket)=>{
 
 		socket.on('start', function(data){
 			console.log(data + socket.id);
@@ -27,8 +25,9 @@ io.sockets.on(
 			io.sockets.emit('position',data);
 		});
 
-		socket.on('leave', function(data){
-			io.sockets.emit('remove',data);
+		socket.on('disconnect', function(){
+			console.log("user"+socket.id+"disconnected");
+			io.sockets.emit('remove',socket.id);
 		});
 	}
 );
