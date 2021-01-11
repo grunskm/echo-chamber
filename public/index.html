@@ -4,10 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Franc Test</title>
+  <title>Test</title>
   <style>
   *{
-    /* box-sizing: border-box; */
     padding:0px;
     margin:0px;
   }
@@ -42,29 +41,16 @@
     position:fixed;
     z-index:11;
   }
+
   </style>
-  <script src="libraries/p5.js"></script>
+  <script src="libraries/p5.js"> </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
   <script src="sketch.js"></script>
 </head>
 <body>
   <div id="cover">
-      <h2 style="margin-top:20%; margin-bottom:5%;">choose your cursor</h2>
-
-      <img class="cursor-icon" id="cursor0" src="cursor0.png" alt="cursor0"
-      onclick="user[0].cursor = 0; document.getElementById('cover').style.display='none';">
-
-      <img class="cursor-icon" id="cursor1" src="cursor1.png" alt="cursor1"
-      onclick="user[0].cursor = 1; document.getElementById('cover').style.display='none';">
-
-      <img class="cursor-icon" id="cursor2" src="cursor2.png" alt="cursor2"
-      onclick="user[0].cursor = 2; document.getElementById('cover').style.display='none';">
-
-      <img class="cursor-icon" id="cursor3" src="cursor3.png" alt="cursor3"
-      onclick="user[0].cursor = 3; document.getElementById('cover').style.display='none';">
-
+      <h2 style="margin-top:20%; margin-bottom:5%;">Please wait while you are connected.</h2>
   </div>
   <iframe src="https://www.youtube.com/embed/0cf31OYUP-Y?autoplay=1&mute=1&loop=1​" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </iframe>
 </body>
 </html>

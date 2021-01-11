@@ -1,86 +1,76 @@
 
-let user = [];
+		let user = [];
 
-let sketch = function(p) {
+		let socket;
+		let size;
+		let cursor;
 
-	let socket;
-
-	let mouse = [];
-	let cursor_size;
-	let cursorImg = 0;
-
-
-	p.setup = function(){
-		p.createCanvas(p.windowWidth,p.windowHeight);
-		p.noCursor();
-		cursor_size = p.width*0.025;
-
-		for(i=0;i<4;i++){
-			mouse.push(p.loadImage("cursor"+i+".png"));
-		}
-
-		socket = io.connect('https://franc-test.herokuapp.com/');
+		socket = io.connect('https://cursor-echo.herokuapp.com/');
 
 		socket.on('connect',()=>{
-			user.push(new User(socket.id,-1,-1,cursorImg));
+			socket.emit('new_user',socket.id);
+			console.log("sent id to server: "+socket.id);
 		});
 
-		socket.on('position', function(data){
+		socket.on('add_user',(data)=>{
+			user.push(new User(data));
+			console.log("add user: "+data);
+		});
 
-			let position_update=false;
-
+		socket.on('receive_position',(data)=>{
+			let update = false;
 			for(i=0;i<user.length;i++){
-				if(data.id==user[i].id){
+				if(data.id == user[i].id){
 					user[i].pos = data.pos;
-					position_update=true;
-				//	print("updated");
+					update = true;
 					break;
 				}
 			}
-			if(position_update==false){
-				user.push(new User(data.id, -1, -1, data.c));
-				p.print("new user: " + data.id);
+			if(update==false){
+				user.push(new User(data.id));
+				console.log("add user: "+data.id);
 			}
 		});
 
-		socket.on('remove',(data)=>{
+		socket.on('remove_user',(data)=>{
 			let i = user.indexOf(data);
 			user.splice(i,1);
-			print("removed user: "+data);
+			console.log(user.length);
 		});
-	}
 
-	p.draw = function(){
-		//background(0);
-		p.clear();
-		for(i=0;i<user.length;i++){
-			user[i].display();
+		function setup(){
+			createCanvas(windowWidth,windowHeight);
+			background(100);
+			noCursor();
+			cursor = loadImage("cursor0.png");
+			size = width*0.025;
 		}
-	}
 
-	p.mouseMoved = function(){
-		if(user.length>0){
-			let xpos = p.mouseX/p.width;
-			let ypos = p.mouseY/p.height;
-			let data = {
-				id:user[0].id,
-				pos:{x:xpos.toFixed(4),y:ypos.toFixed(4)},
-				c:cursorImg
-			};
-		//	print(data);
-			socket.emit('update', data);
+		function draw(){
+			clear();
+			for(i=0;i<user.length;i++){
+				user[i].display();
+			}
 		}
-	}
 
-	function User(ID,X,Y,C){
-		this.id = ID;
-		this.pos = {x:X,y:Y};
-		this.cursor = C;
+		function mouseMoved(){
+				let xpos = mouseX/width;
+				let ypos = mouseY/height;
 
-		this.display = function(){
-			p.image(mouse[this.cursor],this.pos.x*p.width,this.pos.y*p.height,cursor_size,cursor_size);
+				let data = {
+					x:xpos,
+					y:ypos
+				}
+				socket.emit("update_position",data);
 		}
-	}
-}
 
-p51 = new p5(sketch);
+		function User(ID){
+			this.id = ID;
+			this.pos = {
+				x: -1,
+				y: -1
+			}
+			this.display = function(){
+				image(cursor,this.pos.x*width,this.pos.y*height,size,size);
+			}
+		}

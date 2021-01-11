@@ -1,5 +1,6 @@
 
 
+
 var express = require('express');
 var app = express();
 
@@ -17,17 +18,21 @@ var io = require('socket.io')(server);
 
 io.sockets.on('connection',(socket)=>{
 
-		socket.on('start', function(data){
-			console.log(data + socket.id);
-		});
+	socket.on('new_user', (data)=>{
+		io.sockets.emit('add_user',data);
+		console.log("new user id:"+data+". socket.id = "+socket.id);
+	});
 
-		socket.on('update', function(data){
-			io.sockets.emit('position',data);
-		});
+	socket.on('update_position',(data)=>{
+		let data_out = {
+			id:socket.id,
+			pos:data
+		}
+		io.sockets.emit('receive_position',data_out);
+	});
 
-		socket.on('disconnect', function(){
-			console.log("user"+socket.id+"disconnected");
-			io.sockets.emit('remove',socket.id);
-		});
-	}
-);
+	socket.on('disconnect', ()=>{
+		console.log("user "+socket.id+" disconnected");
+		io.sockets.emit('remove_user',socket.id);
+	});
+});
