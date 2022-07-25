@@ -1,1 +1,1 @@
-franc_feedback
+project: cursor echo
