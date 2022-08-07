@@ -70,7 +70,13 @@
 				x: -1,
 				y: -1
 			}
+			this.x = this.pos.x;
+			this.y = this.pos.y;
+			
 			this.display = function(){
+			// uncomment and adjust for mouse easing - makes mouse feel 'skaty'
+			//this.x = lerp(this.x,this.pos.x,0.4);
+			//this.y = lerp(this.y,this.pos.y,0.4);
 				image(cursor,this.pos.x*width,this.pos.y*height,size,size);
 			}
 		}
