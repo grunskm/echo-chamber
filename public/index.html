@@ -13,45 +13,82 @@
   html, body{
     width:100%;
     height:100%;
+    background:black;
   }
   #cover{
-    display:none;
-    position:fixed;
+    /* display:none; */
     background:black;
-    color:white;
-    text-align:center;
     width:100%;
     height:100%;
-    z-index:12;
+    color:white;
   }
-  .cursor-icon{
+  #cover-text{
+    text-align:center;
+  }
+  #recording{
+    width:50%;
+    height:50%;
+    max-height:50%;
+    max-width:50%;
+    border:1px black;
+    position:absolute;
+    left:25%;
+  }
+  /* .cursor-icon{
     width:5%;
-  }
-  .cursor-icon:hover{
+  } */
+  /* .cursor-icon:hover{
     background:white;
-  }
-  iframe{
+  } */
+
+  #livestream{
     width:100%;
     height:100%;
     border:1px black;
     position:fixed;
-    z-index:-10;
+    z-index:10;
   }
   canvas{
     position:fixed;
-    z-index:11;
+    z-index:1000;
   }
 
   </style>
   <script src="libraries/p5.js"> </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
   <script src="sketch.js"></script>
+  <script>
+
+    window.onload = ()=>{
+      let now_date = new Date();
+      let live_date = new Date(2022,08,01);
+      let diff = live_date-now_date;
+      let hrs = floor(diff/3600000);
+
+      let countdown = document.getElementById('countdown');
+      if(hrs>1){
+        countdown.innerText = 'in '+hrs+' hours';
+      }else{
+        'soon'
+      }
+    }
+
+  </script>
 </head>
 <body>
+  <!-- <img src="backimg.png" alt="" style="position:fixed"> -->
   <div id="cover">
-      <h2 style="margin-top:20%; margin-bottom:5%;">Please wait while you are connected.</h2>
+      <div id=cover-text style="margin-bottom:5%;">
+        <h2 style="margin-top:10%; margin-bottom:2.5%;">Cursor Echo is not currently live.</h2>
+        <span >
+        The next livestream will take place <span id="countdown"></span>.<br>
+        A past event recording is available below.<br>
+        </span>
+      </div>
+      <iframe id="recording" src="https://www.youtube.com/embed/ogiWi5UQCAA?autoplay=1&controls=0&mute=1&loop=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div id="mask" style="position:fixed;width:100%;height:100%;background:yellow;opacity:50%;"></div>
   </div>
   <!--   update iframe src with current youtube stream -->
-  <iframe src="https://www.youtube.com/embed/zsLVIu1l0Ig?autoplay=1&mute=1&loop=1​" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <!-- <iframe src="https://www.youtube.com/embed/ogiWi5UQCAA?autoplay=1&mute=1&loop=1​" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 </body>
 </html>
