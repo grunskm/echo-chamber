@@ -9,12 +9,14 @@
   *{
     padding:0px;
     margin:0px;
+    font-family: monospace;
   }
   html, body{
     width:100%;
     height:100%;
     background:black;
     overflow: hidden;
+    user-select:none;
   }
   #cover{
     /* display:none; */
@@ -62,15 +64,17 @@
 
     window.onload = ()=>{
       let now_date = new Date();
-      let live_date = new Date(2022,08,01);
-      let diff = live_date-now_date;
+      let sch_date = new Date('September 1, 2022 3:00:00 UTC');
+      console.log(sch_date);
+
+      let diff = sch_date-now_date;
       let hrs = floor(diff/3600000);
 
       let countdown = document.getElementById('countdown');
       if(hrs>1){
-        countdown.innerText = 'in '+hrs+' hours';
+        countdown.innerText = 'in '+hrs+' hours at '+sch_date.getUTCHours()+":00 UTC "+sch_date.getFullYear()+"/"+sch_date.getMonth()+"/"+sch_date.getDate();
       }else{
-        'soon'
+        countdown.innerText = 'soon';
       }
     }
 
@@ -82,8 +86,8 @@
       <div id=cover-text style="margin-bottom:5%;">
         <h2 style="margin-top:10%; margin-bottom:2.5%;">Cursor Echo is not currently live.</h2>
         <span >
-        The next livestream will take place <span id="countdown"></span>.<br>
-        A past event recording is available below.<br>
+        Next livestream <span id="countdown"></span>.<br>
+        Past event recording below.<br>
         </span>
       </div>
       <iframe id="recording" src="https://www.youtube.com/embed/ogiWi5UQCAA?autoplay=1&controls=0&mute=1&loop=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
