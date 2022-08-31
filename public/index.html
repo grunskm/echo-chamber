@@ -72,7 +72,7 @@
 
       let countdown = document.getElementById('countdown');
       if(hrs>1){
-        countdown.innerText = 'in '+hrs+' hours at '+sch_date.getUTCHours()+":00 UTC "+sch_date.getFullYear()+"/"+sch_date.getMonth()+"/"+sch_date.getDate();
+        countdown.innerText = 'in '+hrs+' hours at '+sch_date.getUTCHours()+":00 UTC "+sch_date.getFullYear()+"/"+sch_date.getMonth()+1+"/"+sch_date.getDate();
       }else{
         countdown.innerText = 'soon';
       }
