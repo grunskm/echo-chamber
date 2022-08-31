@@ -10,6 +10,9 @@
 		let vid_wd = 100;
 		let vid_ht = 100;
 
+		let count = 0;
+		let inactive = false;
+
 		socket = io.connect('https://cursor-echo.herokuapp.com/');
 
 		socket.on('connect',()=>{
@@ -56,8 +59,18 @@
 			for(i=0;i<user.length;i++){
 				user[i].display();
 			}
-
-			//for testing purposes 
+			count++;
+		//	print(count);
+			if(count>10000 && inactive==false){
+				let data = {
+					x:-1000,
+					y:-1000
+				}
+				// hide cursor when inactive
+				socket.emit("update_position",data);
+				inactive == true;
+			}
+			//for testing purposes
 			//fill(255,50);
 			// strokeWeight(5);
 			// stroke(255,0,0);
@@ -74,6 +87,8 @@
 					y:ypos
 				}
 				socket.emit("update_position",data);
+				count = 0;
+				inactive = false;
 		}
 
 		function User(ID){
@@ -90,9 +105,8 @@
 			// uncomment and adjust for mouse easing - makes mouse feel 'skaty'
 			//this.x = lerp(this.x,this.pos.x,0.4);
 			//this.y = lerp(this.y,this.pos.y,0.4);
-				if(this.count<18000){// temporarily removes inactive users
-					image(cursor,this.pos.x*vid_wd+xmargin,this.pos.y*vid_ht+ymargin,size,size);
-				}
+				// temporarily hides inactive users
+				image(cursor,this.pos.x*vid_wd+xmargin,this.pos.y*vid_ht+ymargin,size,size);
 			}
 		}
 
