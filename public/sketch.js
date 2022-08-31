@@ -1,6 +1,5 @@
 
 		let user = [];
-
 		let socket;
 		let size;
 		let cursor;
@@ -9,9 +8,6 @@
 		let xmargin = 0;
 		let vid_wd = 100;
 		let vid_ht = 100;
-
-		let count = 0;
-		let inactive = false;
 
 		socket = io.connect('https://cursor-echo.herokuapp.com/');
 
@@ -59,17 +55,7 @@
 			for(i=0;i<user.length;i++){
 				user[i].display();
 			}
-			count++;
 		//	print(count);
-			if(count>10000 && inactive==false){
-				let data = {
-					x:-1000,
-					y:-1000
-				}
-				// hide cursor when inactive
-				socket.emit("update_position",data);
-				inactive == true;
-			}
 			//for testing purposes
 			//fill(255,50);
 			// strokeWeight(5);
@@ -97,6 +83,7 @@
 				x: -1,
 				y: -1
 			}
+			this.count = 0;
 			//needed for mouse lerping
 			// this.x = this.pos.x;
 			// this.y = this.pos.y;
@@ -106,7 +93,11 @@
 			//this.x = lerp(this.x,this.pos.x,0.4);
 			//this.y = lerp(this.y,this.pos.y,0.4);
 				// temporarily hides inactive users
-				image(cursor,this.pos.x*vid_wd+xmargin,this.pos.y*vid_ht+ymargin,size,size);
+				if(this.count<10000){
+					image(cursor,this.pos.x*vid_wd+xmargin,this.pos.y*vid_ht+ymargin,size,size);
+					this.count++;
+					console.log(this.count);
+				}
 			}
 		}
 
