@@ -64,7 +64,7 @@
 
     window.onload = ()=>{
       let now_date = new Date();
-      let sch_date = new Date('September 1, 2022 12:00:00 UTC');
+      let sch_date = new Date('September 1, 2022 24:00:00 UTC');
       console.log(sch_date);
 
       let diff = sch_date-now_date;
@@ -72,7 +72,7 @@
 
       let countdown = document.getElementById('countdown');
       if(hrs>1){
-        countdown.innerText = 'in '+hrs+' hours at '+sch_date.getUTCHours()+":00 UTC "+sch_date.getFullYear()+"/"+sch_date.getMonth()+1+"/"+sch_date.getDate();
+        countdown.innerText = 'in '+hrs+' hours at '+sch_date.getUTCHours()+":00 UTC "+sch_date.getFullYear()+"/"+(sch_date.getMonth()+1)+"/"+sch_date.getDate();
       }else{
         countdown.innerText = 'soon';
       }
