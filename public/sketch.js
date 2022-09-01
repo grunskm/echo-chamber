@@ -76,6 +76,18 @@
 				count = 0;
 				inactive = false;
 		}
+		function touchMoved(){
+			let xpos = (mouseX-xmargin)/vid_wd;
+			let ypos = (mouseY-ymargin)/vid_ht;
+
+			let data = {
+				x:xpos,
+				y:ypos
+			}
+			socket.emit("update_position",data);
+			count = 0;
+			inactive = false;
+		}
 
 		function User(ID){
 			this.id = ID;
@@ -96,7 +108,7 @@
 				if(this.count<10000){
 					image(cursor,this.pos.x*vid_wd+xmargin,this.pos.y*vid_ht+ymargin,size,size);
 					this.count++;
-					console.log(this.count);
+					//console.log(this.count);
 				}
 			}
 		}
